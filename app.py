@@ -55,35 +55,35 @@ def main():
         col1, col2, col3, col4, col5 = st.columns(5)
 
         with col1:
-            file1 = r'ex_images\resised_SaudiMen.jpg'
+            file1 = r'./ex_images/resised_SaudiMen.jpg'
             st.image(file1)
             if st.button("Predict 1", type="primary"):
                 predicted_class, confidence = predict(file1)
                 file = file1
 
         with col2:
-            file2 = r'ex_images\resised_FormalMen.jpg'
+            file2 = r'./ex_images/resised_FormalMen.jpg'
             st.image(file2)
             if st.button("Predict 2", type="primary"):
                 predicted_class, confidence = predict(file2)
                 file = file2
 
         with col3:
-            file3 = r'ex_images\resised_FormalWomen.jpg'
+            file3 = r'./ex_images/resised_FormalWomen.jpg'
             st.image(file3)
             if st.button("Predict 3", type="primary"):
                 predicted_class, confidence = predict(file3)
                 file = file3
 
         with col4:
-            file4 = r'ex_images\resised_others.jpeg'
+            file4 = r'./ex_images/resised_others.jpeg'
             st.image(file4)
             if st.button("Predict 4", type="primary"):
                 predicted_class, confidence = predict(file4)
                 file = file4
 
         with col5:
-            file5 = r'ex_images\resised_SaudiWomen.jpg'
+            file5 = r'./ex_images/resised_SaudiWomen.jpg'
             st.image(file5)
             if st.button("Predict 5", type="primary"):
                 predicted_class, confidence = predict(file5)
