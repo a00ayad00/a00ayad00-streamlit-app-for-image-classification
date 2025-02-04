@@ -1,4 +1,4 @@
 tensorflow
 streamlit
 boto3
-dotenv
+python-dotenv
