@@ -6,9 +6,8 @@ import boto3
 from dotenv import load_dotenv
 import os
 
-load_dotenv()
-AccessKeyID = os.environ['AccessKeyID']
-SecretAccessKey = os.environ['SecretAccessKey']
+AccessKeyID = st.secrets['AccessKeyID']
+SecretAccessKey = st.secrets['SecretAccessKey']
 
 if not os.path.exists('model.keras'):
     s3 = boto3.client('s3', aws_access_key_id=AccessKeyID , aws_secret_access_key=SecretAccessKey)
@@ -46,7 +45,7 @@ def main():
     st.logo(image='logo-1-1.png', size="large", link='https://www.rmg-sa.com/en/')
     
 
-    genre = st.selectbox(
+    genre = st.radio(
         label = "What would you like to try?",
         options = ["Try existing samples for quick overview", "Choose your own sample"]
     )
