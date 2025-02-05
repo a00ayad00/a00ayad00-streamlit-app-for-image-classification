@@ -101,7 +101,6 @@ def main():
                 st.success(f"Prediction: {predicted_class}")
                 st.info(f"Confidence: {confidence:.2f}%")
 
-
         elif not on:    
             st.write("Camera status: off")
 
