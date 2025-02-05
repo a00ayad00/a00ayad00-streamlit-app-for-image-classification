@@ -93,7 +93,7 @@ def main():
         if on:
             st.write("Camera status: on!")
 
-            picture = st.camera_input("Take a picture", disabled = not enable)
+            picture = st.camera_input("Take a picture", disabled = not on)
 
             if picture:
                 predicted_class, confidence = predict(picture)
