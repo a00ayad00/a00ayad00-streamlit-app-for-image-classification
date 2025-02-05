@@ -1,4 +1,4 @@
-model.keras
-/Data
-/task.ipynb
-.env
+# model.keras
+Data
+task.ipynb
+# .env

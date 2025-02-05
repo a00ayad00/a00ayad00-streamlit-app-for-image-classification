@@ -1,37 +1,8 @@
 import streamlit as st
-from keras.models import load_model
-from keras.preprocessing.image import load_img, img_to_array
-import numpy as np
-import boto3
-from dotenv import load_dotenv
 import os
+from model import download, predict
 
-AccessKeyID = st.secrets['AccessKeyID']
-SecretAccessKey = st.secrets['SecretAccessKey']
-
-if not os.path.exists('model.keras'):
-    s3 = boto3.client('s3', aws_access_key_id=AccessKeyID , aws_secret_access_key=SecretAccessKey)
-    s3.download_file('saudi-clothes-classification', 'models/pretrained/model.keras','model.keras')
-
-# Load the saved Keras model
-model = load_model('model.keras')
-
-# Define class labels
-class_labels = ['Formal Men', 'Formal Women', 'Others', 'Saudi Men', 'Saudi Women']
-
-def predict(uploaded_file):
-    # Preprocess the image
-    image = load_img(uploaded_file, target_size=(224, 224))  # Resize as per model's input shape
-    image_array = img_to_array(image)
-    image_array = np.expand_dims(image_array, axis=0)  # Add batch dimension
-    image_array = image_array / 255.0  # Normalize to [0, 1]
-
-    # Make prediction
-    prediction = model.predict(image_array, verbose=0)
-    predicted_class = class_labels[np.argmax(prediction)]
-    confidence = np.max(prediction) * 100
-
-    return predicted_class, confidence
+download()
 
 # Streamlit UI
 def main():
@@ -47,7 +18,7 @@ def main():
 
     genre = st.radio(
         label = "What would you like to try?",
-        options = ["Try existing samples for quick overview", "Choose your own sample"]
+        options = ["Try existing samples for quick overview", "Choose your own sample", "Open your camera"]
     )
     
     if genre == "Try existing samples for quick overview":
@@ -115,8 +86,25 @@ def main():
                             st.success(f"Prediction: {predicted_class}")
                             st.info(f"Confidence: {confidence:.2f}%")
                         except Exception as e:
-                            pass        
-    
+                            pass
+    elif genre == "Open your camera":
+
+        on = st.toggle("Camera switch")
+        if on:
+            st.write("Camera status: on!")
+
+            picture = st.camera_input("Take a picture", disabled = not enable)
+
+            if picture:
+                predicted_class, confidence = predict(picture)
+                st.image(picture, caption="Camera is open", width=240)
+                st.success(f"Prediction: {predicted_class}")
+                st.info(f"Confidence: {confidence:.2f}%")
+
+
+        elif not on:    
+            st.write("Camera status: off")
+
 
 if __name__ == "__main__":
     main()
